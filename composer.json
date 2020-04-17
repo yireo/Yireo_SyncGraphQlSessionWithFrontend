@@ -1,0 +1,31 @@
+{
+  "name": "yireo/magento2-sync-graph-ql-session-with-frontend",
+  "license": "OSL-3.0",
+  "type": "magento2-module",
+  "version": "0.0.1",
+  "homepage": "https://github.com/yireo/Yireo_SyncGraphQlSessionWithFrontend",
+  "description": "Magento 2 module to sync a GraphQL session with the regular session",
+  "keywords": [
+    "composer-installer",
+    "magento"
+  ],
+  "authors": [
+    {
+      "name": "Jisse Reitsma (Yireo)",
+      "email": "jisse@yireo.com"
+    }
+  ],
+  "require": {
+    "magento/framework": "^100.1|^101.0|^102.0",
+    "magento/module-checkout": "^100.1",
+    "magento/module-quote": "^100.1|^101.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Yireo\\SyncGraphQlSessionWithFrontend\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
+}
