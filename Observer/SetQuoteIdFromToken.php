@@ -12,6 +12,10 @@ use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\QuoteIdMaskFactory;
 use Magento\Quote\Model\Quote;
 
+/**
+ * Class SetQuoteIdFromToken
+ * @package Yireo\SyncGraphQlSessionWithFrontend\Observer
+ */
 class SetQuoteIdFromToken implements ObserverInterface
 {
     /**
