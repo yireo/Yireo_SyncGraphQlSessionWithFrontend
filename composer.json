@@ -2,7 +2,7 @@
   "name": "yireo/magento2-sync-graph-ql-session-with-frontend",
   "license": "OSL-3.0",
   "type": "magento2-module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/yireo/Yireo_SyncGraphQlSessionWithFrontend",
   "description": "Magento 2 module to sync a GraphQL session with the regular session",
   "keywords": [
