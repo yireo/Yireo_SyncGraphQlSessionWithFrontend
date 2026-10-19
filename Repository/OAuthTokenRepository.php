@@ -6,32 +6,43 @@ namespace Yireo\SyncGraphQlSessionWithFrontend\Repository;
 
 use Magento\Framework\Exception\NotFoundException;
 use Magento\Integration\Model\Oauth\Token as TokenModel;
+use Magento\Integration\Model\Oauth\TokenFactory;
+use Magento\Integration\Model\ResourceModel\Oauth\Token\CollectionFactory as TokenCollectionFactory;
 
 class OAuthTokenRepository
 {
     /**
-     * @var TokenModel
+     * @var TokenFactory
      */
-    private $tokenModel;
+    private $tokenFactory;
+
+    /**
+     * @var TokenCollectionFactory
+     */
+    private $tokenCollectionFactory;
 
     /**
      * OAuthTokenRepository constructor.
-     * @param TokenModel $tokenModel
+     * @param TokenFactory $tokenFactory
+     * @param TokenCollectionFactory $tokenCollectionFactory
      */
     public function __construct(
-        TokenModel $tokenModel
+        TokenFactory $tokenFactory,
+        TokenCollectionFactory $tokenCollectionFactory
     ) {
-        $this->tokenModel = $tokenModel;
+        $this->tokenFactory = $tokenFactory;
+        $this->tokenCollectionFactory = $tokenCollectionFactory;
     }
 
     /**
      * @param string $token
      * @return TokenModel
+     * @throws NotFoundException
      */
     public function getByToken(string $token): TokenModel
     {
-        $tokenModel = $this->tokenModel->load($token, 'token');
-        if (!$tokenModel instanceof TokenModel) {
+        $tokenModel = $this->tokenFactory->create()->loadByToken($token);
+        if (!$tokenModel->getId()) {
             throw new NotFoundException(__('Token not found'));
         }
 
@@ -45,7 +56,7 @@ class OAuthTokenRepository
      */
     public function getByCustomerId(int $customerId): TokenModel
     {
-        $tokenCollection = $this->tokenModel->getCollection();
+        $tokenCollection = $this->tokenCollectionFactory->create();
         $tokenCollection->addFilter('customer_id', $customerId);
         $tokenCollection->addOrder('created_at', 'DESC');
         $tokenCollection->setPageSize(1);
