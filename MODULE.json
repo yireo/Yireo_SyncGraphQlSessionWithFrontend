@@ -3,7 +3,6 @@
     "composer_name": "yireo/magento2-sync-graph-ql-session-with-frontend",
     "sequence": [
         "Magento_Checkout",
-        "Magento_Quote",
-        "Magento_Store"
+        "Magento_Quote"
     ]
 }
