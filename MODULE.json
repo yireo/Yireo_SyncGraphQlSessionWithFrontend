@@ -4,5 +4,7 @@
     "sequence": [
         "Magento_Checkout",
         "Magento_Quote"
-    ]
+    ],
+    "phpcs_severity": "6",
+    "phpstan_level": "5"
 }
