@@ -7,7 +7,7 @@
 ![Latest Version](https://img.shields.io/packagist/v/yireo/magento2-sync-graph-ql-session-with-frontend)
 <!-- badges.specs.end -->
 
-Magento 2 module to sync from the GraphQL session to the Knockout session and from the Knockout session to the GraphQL session.
+Magento 2 module to sync the guest cart between the GraphQL session and the Knockout session.
 
 ## Summary
 - The GraphQL cart token (aka `masked_id`) is added to the CustomerDatas section `cart` of the Knockout frontend (`customerData.get('cart')`) which is automatically synced by Knockout to local storage;
@@ -78,19 +78,11 @@ mutation addToCart($cartId: String!) {
 
 Next, head over to the Knockout frontend, wipe out local storage `mage-cache-storage.cart` (or do this in Knockout via `customerData.clear()`) and inspect the cart again.
 
-## Proof-of-Concept for customer
-Use a GraphQL client within React to generate a customer token:
-```graphql
-mutation login($email:String!, $password:String!) {
-  generateCustomerToken(email:$email, password:$password) {
-    token
-  }
-}
-```
-
-Next, login as the same customer in the Knockout frontend. The local storage item `mage-cache-storage.customer.customer_token` now refers to the same GraphQL token.
-
-This probably needs some enhancement, so that you are logged in right away in either frontend, without loosing security.
+## Security
+- The `masked_id` is only added for guest carts. For a guest cart, the masked ID is the only credential that GraphQL needs to read and modify that cart (email, addresses, placing the order). Because it is stored in local storage, any XSS or compromised third-party script on your site can read it. Keep a strict Content Security Policy and be careful with third-party scripts.
+- For customer carts, no `masked_id` is added: GraphQL requires a customer token for those carts anyway.
+- When using a headless frontend on another origin, keep the CORS allow-list strict and never combine `Access-Control-Allow-Credentials: true` with a wildcard or reflected origin, because `customer/section/load` would then be readable cross-origin.
+- Older versions of this module also added the GraphQL customer token to the `customer` section (`mage-cache-storage.customer.customer_token`). This was removed, because it exposed a bearer token to JavaScript (also to visitors with only a persistent "Remember Me" session) and returned tokens that were revoked or issued to other devices. To get a customer token in a headless frontend, use the `generateCustomerToken` mutation instead.
 
 ## Current status
 
