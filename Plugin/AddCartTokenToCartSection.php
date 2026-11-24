@@ -20,8 +20,8 @@ class AddCartTokenToCartSection
 
     /**
      * @param CartSection $cartSection
-     * @param array $result
-     * @return array
+     * @param array<string, mixed> $result
+     * @return array<string, mixed>
      */
     public function afterGetSectionData(CartSection $cartSection, array $result): array
     {
