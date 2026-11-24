@@ -3,8 +3,9 @@
     "composer_name": "yireo/magento2-sync-graph-ql-session-with-frontend",
     "sequence": [
         "Magento_Checkout",
-        "Magento_Quote"
+        "Magento_Quote",
+        "Magento_Store"
     ],
     "phpcs_severity": "6",
-    "phpstan_level": "5"
+    "phpstan_level": "8"
 }
