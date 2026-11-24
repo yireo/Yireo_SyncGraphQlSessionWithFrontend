@@ -71,14 +71,18 @@ class AddCartTokenToCartSectionTest extends TestCase
     {
         $quote = $this->getMockBuilder(Quote::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getCustomerId'])
+            ->onlyMethods([])
             ->getMock();
-        $quote->method('getCustomerId')->willReturn($customerId);
+        $quote->setData('customer_id', $customerId);
 
         $this->checkoutSession->method('getQuoteId')->willReturn($quoteId);
         $this->checkoutSession->method('getQuote')->willReturn($quote);
     }
 
+    /**
+     * @param array<string, mixed> $result
+     * @return array<string, mixed>
+     */
     private function callPlugin(array $result): array
     {
         $plugin = new AddCartTokenToCartSection($this->checkoutSession, $this->quoteIdToMaskedQuoteId);

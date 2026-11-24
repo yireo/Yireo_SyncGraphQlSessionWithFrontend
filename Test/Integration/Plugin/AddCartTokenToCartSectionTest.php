@@ -6,7 +6,6 @@ namespace Yireo\SyncGraphQlSessionWithFrontend\Test\Integration\Plugin;
 
 use Magento\Checkout\CustomerData\Cart as CartSection;
 use Magento\Checkout\Model\Session as CheckoutSession;
-use Magento\Customer\CustomerData\Customer as CustomerSection;
 use Magento\Framework\App\Area;
 use Magento\Framework\Interception\PluginList\PluginList;
 use Magento\Quote\Model\QuoteIdToMaskedQuoteIdInterface;
@@ -27,7 +26,8 @@ class AddCartTokenToCartSectionTest extends TestCase
         $this->assertArrayHasKey('AddCartTokenToCartSection', $plugins);
         $this->assertSame(AddCartTokenToCartSection::class, $plugins['AddCartTokenToCartSection']['instance']);
 
-        $this->assertArrayNotHasKey('AddCustomerTokenToCustomerSection', $pluginList->get(CustomerSection::class, []));
+        $customerPlugins = $pluginList->get('Magento\\Customer\\CustomerData\\Customer', []);
+        $this->assertArrayNotHasKey('AddCustomerTokenToCustomerSection', $customerPlugins);
     }
 
     /**
