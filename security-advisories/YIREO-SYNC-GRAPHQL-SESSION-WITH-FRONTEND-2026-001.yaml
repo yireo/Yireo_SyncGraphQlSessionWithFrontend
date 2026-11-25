@@ -1,0 +1,34 @@
+schema_version: "1.6.0"
+id: YIREO-SYNC-GRAPHQL-SESSION-WITH-FRONTEND-2026-001
+published: "2026-11-25T00:00:00Z"
+modified: "2026-11-25T00:00:00Z"
+aliases: []
+summary: Customer GraphQL bearer token exposed to JavaScript and local storage via the customer section
+details: >
+  The module added the customer's GraphQL bearer token (from the oauth_token table) to the customer
+  section data, which is delivered to JavaScript and stored in the browser's local storage. The token
+  was also returned for persistent ("Remember Me") sessions in which the customer was not logged in,
+  allowing anyone with access to a shared device to obtain a fully privileged customer token. The
+  lookup did not check revocation and could return revoked tokens or tokens issued to other devices,
+  and any cross-site scripting flaw in the shop could be used to steal the token. Version 1.0.0 no
+  longer adds customer_token to the customer section. Merchants should upgrade and consider revoking
+  existing customer tokens.
+severity:
+  - type: CVSS_V3
+    score: "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N"
+affected:
+  - package:
+      ecosystem: Packagist
+      name: yireo/magento2-sync-graph-ql-session-with-frontend
+    ranges:
+      - type: ECOSYSTEM
+        events:
+          - introduced: "0"
+          - fixed: "1.0.0"
+references:
+  - type: PACKAGE
+    url: https://github.com/yireo/Yireo_SyncGraphQlSessionWithFrontend
+database_specific:
+  cwe_ids:
+    - CWE-522
+    - CWE-200
